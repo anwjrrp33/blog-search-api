@@ -21,7 +21,7 @@ public class BlogService {
     private final ApplicationEventPublisher eventPublisher;
 
     public BlogResponse search(BlogRequest blogRequest) {
-        eventPublisher.publishEvent(new KeywordEvent(blogRequest, blogRequest.getQuery()));
+        eventPublisher.publishEvent(new KeywordEvent(this, blogRequest.getQuery()));
 
         return blogSearches.stream()
                 .map(blogSearch -> safeBlogSearch(blogSearch, blogRequest))

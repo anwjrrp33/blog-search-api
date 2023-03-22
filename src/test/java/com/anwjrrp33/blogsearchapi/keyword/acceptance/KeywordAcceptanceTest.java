@@ -16,6 +16,7 @@ import static com.anwjrrp33.blogsearchapi.blog.acceptance.BlogAcceptanceTest.블
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("인기 검색어 인수 테스트")
+
 public class KeywordAcceptanceTest extends AcceptanceTest {
 
     private BlogRequest blogRequest;

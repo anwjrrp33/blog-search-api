@@ -9,12 +9,10 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 @RequiredArgsConstructor
-public class KeywordEventListener implements ApplicationListener<KeywordEvent> {
+public class KeywordEventListener {
 
     private final KeywordService keywordService;
 
-
-    @Override
     @Async
     @TransactionalEventListener
     public void onApplicationEvent(KeywordEvent event) {
