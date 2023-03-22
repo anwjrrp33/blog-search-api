@@ -2,6 +2,7 @@ package com.anwjrrp33.blogsearchapi.blog.service;
 
 import com.anwjrrp33.blogsearchapi.blog.dto.BlogRequest;
 import com.anwjrrp33.blogsearchapi.blog.dto.BlogResponse;
+import com.anwjrrp33.blogsearchapi.common.exception.ApiCallException;
 import com.anwjrrp33.blogsearchapi.keyword.service.KeywordService;
 import com.anwjrrp33.blogsearchapi.search.domain.BlogSearch;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,6 @@ public class BlogService {
                 continue;
             }
         }
-        throw   new RuntimeException();
+        throw new ApiCallException();
     }
 }
