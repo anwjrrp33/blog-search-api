@@ -9,6 +9,7 @@ import com.anwjrrp33.blogsearchapi.search.dto.NaverBlogSearchRequest;
 import com.anwjrrp33.blogsearchapi.search.dto.NaverBlogSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,6 +36,7 @@ public class NaverBlogSearch implements BlogSearch {
     private String secret;
 
     @Override
+    @Cacheable(cacheNames = "blogs", key = "#blogRequest", unless = "#result == null", cacheManager = "cacheManager")
     public BlogResponse blogSearch(BlogRequest blogRequest) {
         NaverBlogSearchRequest naverBlogSearchRequest = new NaverBlogSearchRequest(blogRequest);
 

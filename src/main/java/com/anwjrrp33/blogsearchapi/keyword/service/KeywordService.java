@@ -5,6 +5,7 @@ import com.anwjrrp33.blogsearchapi.keyword.domain.Keyword;
 import com.anwjrrp33.blogsearchapi.keyword.dto.KeywordResponse;
 import com.anwjrrp33.blogsearchapi.keyword.repository.KeywordRespository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ public class KeywordService {
 
     private final KeywordRespository keywordRespository;
 
+    @Cacheable(cacheNames = "keywords", unless = "#result == null", cacheManager = "cacheManager")
     public List<KeywordResponse> rank() {
         List<Keyword> keywords = keywordRespository.findTop10ByOrderByCount()
                 .orElseThrow(NotFoundException::new);

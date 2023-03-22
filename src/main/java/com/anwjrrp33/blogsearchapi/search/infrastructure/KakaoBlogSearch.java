@@ -8,6 +8,7 @@ import com.anwjrrp33.blogsearchapi.search.dto.KakaoBlogSearchRequest;
 import com.anwjrrp33.blogsearchapi.search.dto.KakaoBlogSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class KakaoBlogSearch implements BlogSearch {
     private String key;
 
     @Override
+    @Cacheable(cacheNames = "blogs", key = "#blogRequest", unless = "#result == null", cacheManager = "cacheManager")
     public BlogResponse blogSearch(BlogRequest blogRequest) {
         KakaoBlogSearchRequest kakaoBlogSearchRequest = new KakaoBlogSearchRequest(blogRequest);
 
