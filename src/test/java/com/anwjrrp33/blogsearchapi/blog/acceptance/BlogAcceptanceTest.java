@@ -9,15 +9,12 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("블로그 검색 인수 테스트")
-@ExtendWith(MockitoExtension.class)
 public class BlogAcceptanceTest extends AcceptanceTest {
 
     private BlogRequest blogRequest;
