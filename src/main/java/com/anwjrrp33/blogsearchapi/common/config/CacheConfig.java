@@ -22,15 +22,15 @@ public class CacheConfig extends CachingConfigurerSupport {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
 
         ConcurrentMapCache blogCache = new ConcurrentMapCache("blogs", getBlogsCacheMap(), false);
-        ConcurrentMapCache hotKeyCache = new ConcurrentMapCache("keywords", getHotKeyCacheMap(), false);
-        cacheManager.setCaches(Arrays.asList(blogCache, hotKeyCache));
+        ConcurrentMapCache keywordCache = new ConcurrentMapCache("keywords", getKeywordCacheMap(), false);
+        cacheManager.setCaches(Arrays.asList(blogCache, keywordCache));
 
         return cacheManager;
     }
 
-    private ConcurrentMap<Object, Object> getHotKeyCacheMap() {
+    private ConcurrentMap<Object, Object> getKeywordCacheMap() {
         return Caffeine.newBuilder()
-                .expireAfterWrite(1, TimeUnit.MINUTES)
+                .expireAfterWrite(10, TimeUnit.SECONDS)
                 .maximumSize(1)
                 .build()
                 .asMap();

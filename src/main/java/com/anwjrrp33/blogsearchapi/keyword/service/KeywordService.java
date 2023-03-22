@@ -32,7 +32,6 @@ public class KeywordService {
     }
 
     @Transactional
-    @Async
     public Keyword count(String keyword) {
         Optional<Keyword> optional = keywordRespository.findByKeyword(keyword);
 
