@@ -1,6 +1,7 @@
 package com.anwjrrp33.blogsearchapi.search.dto;
 
 import com.anwjrrp33.blogsearchapi.blog.dto.BlogRequest;
+import com.anwjrrp33.blogsearchapi.blog.dto.Sort;
 import lombok.Getter;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,7 +25,7 @@ public class NaverBlogSearchRequest {
         this.query = blogRequest.getQuery();
         this.display = blogRequest.getSize();
         this.start = start(blogRequest.getPage(), blogRequest.getSize());
-        this.sort = blogRequest.getSort().getNaverValue();
+        this.sort = blogRequest.getSort() != null ? blogRequest.getSort().getNaverValue() : Sort.ACCURACY.getNaverValue();
     }
 
     public Integer start(Integer page, Integer size) {
