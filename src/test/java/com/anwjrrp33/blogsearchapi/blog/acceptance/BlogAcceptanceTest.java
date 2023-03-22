@@ -9,12 +9,15 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("블로그 검색 인수 테스트")
+@ExtendWith(MockitoExtension.class)
 public class BlogAcceptanceTest extends AcceptanceTest {
 
     private BlogRequest blogRequest;
@@ -26,7 +29,7 @@ public class BlogAcceptanceTest extends AcceptanceTest {
         blogRequest = new BlogRequest("우아한유스방", Sort.ACCURACY, 1, 10);
     }
 
-    @DisplayName("블로그를 검색한다.")
+    @DisplayName("블로그 검색 목록을 조회한다.")
     @Test
     void search() {
         ExtractableResponse<Response> response = 블로그_검색_요청(blogRequest);

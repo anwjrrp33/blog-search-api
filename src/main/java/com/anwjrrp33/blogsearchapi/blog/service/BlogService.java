@@ -19,9 +19,9 @@ public class BlogService {
     private final KeywordService keywordService;
 
     public BlogResponse search(BlogRequest blogRequest) {
-        for (BlogSearch blogSearch : blogSearches) {
+        for (int i = 0; i < blogSearches.size(); i++) {
             try {
-                BlogResponse blogResponse = blogSearch.blogSearch(blogRequest);
+                BlogResponse blogResponse = blogSearches.get(0).blogSearch(blogRequest);
                 keywordService.count(blogRequest.getQuery());
                 return blogResponse;
             } catch (RuntimeException e) {
