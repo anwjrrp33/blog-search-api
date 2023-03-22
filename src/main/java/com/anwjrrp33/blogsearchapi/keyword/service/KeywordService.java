@@ -20,22 +20,23 @@ public class KeywordService {
     private final KeywordRespository keywordRespository;
 
     public List<KeywordResponse> rank() {
-        return keywordRespository.findTop10ByOrderByCount()
-                .orElseThrow(NotFoundException::new)
-                .stream()
+        List<Keyword> keywords = keywordRespository.findTop10ByOrderByCount()
+                .orElseThrow(NotFoundException::new);
+
+        return keywords.stream()
                 .map(KeywordResponse::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void count(String keyword) {
+    public Keyword count(String keyword) {
         Optional<Keyword> optional = keywordRespository.findByKeyword(keyword);
 
         if (optional.isPresent()) {
             optional.get().count();
-            return;
+            return optional.get();
         }
 
-        keywordRespository.save(Keyword.from(keyword));
+        return keywordRespository.save(Keyword.from(keyword));
     }
 }
