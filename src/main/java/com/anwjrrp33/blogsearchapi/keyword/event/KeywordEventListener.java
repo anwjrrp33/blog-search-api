@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class KeywordEventListener implements ApplicationListener<KeywordEvent> {
 
     @Override
     @Async
+    @TransactionalEventListener
     public void onApplicationEvent(KeywordEvent event) {
         keywordService.count(event.getKeyword());
     }
