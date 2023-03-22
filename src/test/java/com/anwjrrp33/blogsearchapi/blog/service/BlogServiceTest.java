@@ -5,7 +5,6 @@ import com.anwjrrp33.blogsearchapi.blog.dto.BlogRequest;
 import com.anwjrrp33.blogsearchapi.blog.dto.BlogResponse;
 import com.anwjrrp33.blogsearchapi.blog.dto.Sort;
 import com.anwjrrp33.blogsearchapi.common.exception.ApiCallException;
-import com.anwjrrp33.blogsearchapi.keyword.service.KeywordService;
 import com.anwjrrp33.blogsearchapi.search.domain.BlogSearch;
 import com.anwjrrp33.blogsearchapi.search.infrastructure.KakaoBlogSearch;
 import com.anwjrrp33.blogsearchapi.search.infrastructure.NaverBlogSearch;
@@ -17,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -35,6 +35,9 @@ public class BlogServiceTest {
 
     @Mock
     private List<BlogSearch> blogSearches;
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     private BlogRequest blogRequest;
 
@@ -57,7 +60,7 @@ public class BlogServiceTest {
     void kakaoBlogSearch() {
         KakaoBlogSearch kakaoBlogSearch = Mockito.mock(KakaoBlogSearch.class);
         blogSearches = Arrays.asList(kakaoBlogSearch);
-        blogService = new BlogService(blogSearches, Mockito.mock(KeywordService.class));
+        blogService = new BlogService(blogSearches, Mockito.mock(ApplicationEventPublisher.class));
         when(kakaoBlogSearch.blogSearch(blogRequest)).thenReturn(blogResponse);
 
         BlogResponse result = blogService.search(blogRequest);
@@ -70,7 +73,7 @@ public class BlogServiceTest {
     void naverBlogSearch() {
         NaverBlogSearch naverBlogSearch = Mockito.mock(NaverBlogSearch.class);
         blogSearches = Arrays.asList(naverBlogSearch);
-        blogService = new BlogService(blogSearches, Mockito.mock(KeywordService.class));
+        blogService = new BlogService(blogSearches, Mockito.mock(ApplicationEventPublisher.class));
         when(naverBlogSearch.blogSearch(blogRequest)).thenReturn(blogResponse);
 
         BlogResponse result = blogService.search(blogRequest);

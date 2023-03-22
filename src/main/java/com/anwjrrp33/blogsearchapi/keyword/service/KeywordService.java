@@ -5,6 +5,7 @@ import com.anwjrrp33.blogsearchapi.keyword.domain.Keyword;
 import com.anwjrrp33.blogsearchapi.keyword.dto.KeywordResponse;
 import com.anwjrrp33.blogsearchapi.keyword.repository.KeywordRespository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class KeywordService {
     }
 
     @Transactional
+    @Async
     public Keyword count(String keyword) {
         Optional<Keyword> optional = keywordRespository.findByKeyword(keyword);
 
