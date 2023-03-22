@@ -1,4 +1,4 @@
-package com.anwjrrp33.blogsearchapi.blog.acceptance;
+package com.anwjrrp33.blogsearchapi.keyword.acceptance;
 
 import com.anwjrrp33.blogsearchapi.blog.dto.BlogRequest;
 import com.anwjrrp33.blogsearchapi.blog.dto.Sort;
@@ -12,10 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import static com.anwjrrp33.blogsearchapi.blog.acceptance.BlogAcceptanceTest.블로그_검색_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("블로그 검색 인수 테스트")
-public class BlogAcceptanceTest extends AcceptanceTest {
+@DisplayName("인기 검색어 인수 테스트")
+public class KeywordAcceptanceTest extends AcceptanceTest {
 
     private BlogRequest blogRequest;
 
@@ -26,28 +27,26 @@ public class BlogAcceptanceTest extends AcceptanceTest {
         blogRequest = new BlogRequest("우아한유스방", Sort.ACCURACY, 1, 10);
     }
 
-    @DisplayName("블로그를 검색한다.")
+    @DisplayName("인기 검색어 목록을 조회한다.")
     @Test
-    void search() {
-        ExtractableResponse<Response> response = 블로그_검색_요청(blogRequest);
+    void rank() {
+        블로그_검색_요청(blogRequest);
 
-        블로그_검색_응답됨(response);
+        ExtractableResponse<Response> response = 인기_키워드_목록_요청(blogRequest);
+
+        인기_키워드_목록_응답됨(response);
     }
 
-    public static ExtractableResponse<Response> 블로그_검색_요청(BlogRequest blogRequest) {
+    private static ExtractableResponse<Response> 인기_키워드_목록_요청(BlogRequest blogRequest) {
         return RestAssured
                 .given().log().all()
-                .param("query", blogRequest.getQuery())
-                .param("sort", blogRequest.getSort())
-                .param("page", blogRequest.getPage())
-                .param("size", blogRequest.getSize())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when().get("/blog/search")
+                .when().get("/keyword/rank")
                 .then().log().all()
                 .extract();
     }
 
-    private static void 블로그_검색_응답됨(ExtractableResponse<Response> response) {
+    private static void 인기_키워드_목록_응답됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 }
